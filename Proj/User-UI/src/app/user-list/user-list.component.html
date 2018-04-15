@@ -1,0 +1,37 @@
+<div>
+<button (click)="addUser()">Add</button>
+</div>
+<div>
+<p-table #tt [columns]="columns" [value]="userList">
+<ng-template pTemplate="caption">
+    List of Users
+</ng-template>
+<ng-template pTemplate="caption">
+    <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+    <input type="text" pInputText size="50" placeholder="Global Filter" (input)="tt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+    <button type="button" pButton icon="fa-file-o" iconPos="left" label="All Data" (click)="tt.exportCSV()" style="float:left">Export Excel</button>
+</ng-template>
+  <ng-template pTemplate="header" let-columns>
+      <tr>
+          <th *ngFor="let col of columns">
+              {{col.header}}
+          </th>
+          <th>Action</th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData>
+      <tr *ngFor="let item of userList">
+          <td>{{item.firstName}}</td>
+          <td>{{item.lastName}}</td>
+          <td>{{item.email}}</td>
+          <td>{{item.contactNo}}</td>
+          <td><a href="javascript:void(0)" (click)="edit(item.id)">edit</a> /
+            <a href="javascript:void(0)" (click)="delete(item.id)">delete</a>
+          </td>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+    There are {{userList?.length}} Users
+  </ng-template>
+</p-table>
+</div>
