@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mysql.demoMysql.model.DataTableEntity;
+import com.mysql.demoMysql.model.DataTableParam;
 import com.mysql.demoMysql.model.RequestVO;
 import com.mysql.demoMysql.model.ResponseVO;
 import com.mysql.demoMysql.model.User;
@@ -34,11 +36,12 @@ public class Controller {
 	}
 	
 	@RequestMapping(value = LIST_USER, method = RequestMethod.POST)
-	public ResponseVO<User> listUserList() throws Exception {
-		ResponseVO<User> responseVO = new ResponseVO<>();
-		responseVO.setData(userService.getUserList());
+	public ResponseVO<DataTableEntity<User>> listUserList(@RequestBody RequestVO<DataTableParam> requestVO) throws Exception {
+		ResponseVO<DataTableEntity<User>> responseVO = new ResponseVO<>();
+		responseVO.setValueObject(userService.getUserList(requestVO.getDataTableParam()));
 		responseVO.setStatusCode("A200");
 		responseVO.setStatusDescription("OK");
+		
 		return responseVO;
 	}
 	
