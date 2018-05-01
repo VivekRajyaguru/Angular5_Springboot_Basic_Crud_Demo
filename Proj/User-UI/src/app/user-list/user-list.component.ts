@@ -36,7 +36,6 @@ export class UserListComponent implements OnInit {
   }
 
   onLazyLoad(event) {
-    console.log(event)
     this.datatableParam = {
       'first': event.first ? event.first : 1,
       'rows': event.rows ? event.rows : 1 ,
@@ -71,6 +70,7 @@ export class UserListComponent implements OnInit {
   listUser() {
     this.userService.listUser(this.datatableParam).subscribe(
       data => {
+        console.log(data);
         if (data.statusCode === 'A200') {
           this.userList = data.valueObject.data;
           this.first = data.valueObject.first;

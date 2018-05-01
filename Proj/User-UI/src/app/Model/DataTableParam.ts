@@ -1,4 +1,3 @@
-
 export class DataTableParam {
     first: Number;
     rows: Number;
@@ -6,3 +5,4 @@ export class DataTableParam {
     sortOrder: Number;
     searchValue: string;
 }
+

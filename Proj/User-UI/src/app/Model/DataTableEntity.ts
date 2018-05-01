@@ -1,5 +1,3 @@
-
-
 export class DataTableEntity<T> {
     totalRecords: Number;
     first: Number;
