@@ -1,5 +1,4 @@
 package com.mysql.demoMysql.model;
-
 import java.util.HashMap;
 
 public class RequestVO<T> {
@@ -8,6 +7,8 @@ public class RequestVO<T> {
 	private HashMap<String,String> paramMap;
 	private DataTableParam dataTableParam; 
 
+	
+
 	public T getValueObject() {
 		return valueObject;
 	}
@@ -15,7 +16,7 @@ public class RequestVO<T> {
 	public void setValueObject(T valueObject) {
 		this.valueObject = valueObject;
 	}
-
+	
 	public HashMap<String, String> getParamMap() {
 		return paramMap;
 	}
@@ -31,7 +32,6 @@ public class RequestVO<T> {
 	public void setDataTableParam(DataTableParam dataTableParam) {
 		this.dataTableParam = dataTableParam;
 	}
-	
 	
 	
 }

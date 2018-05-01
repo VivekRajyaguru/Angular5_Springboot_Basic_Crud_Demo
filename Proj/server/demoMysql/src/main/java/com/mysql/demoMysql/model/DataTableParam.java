@@ -1,7 +1,5 @@
 package com.mysql.demoMysql.model;
 
-
-
 public class DataTableParam {
 
 	private int first;
@@ -47,7 +45,4 @@ public class DataTableParam {
 				+ sortOrder + ", searchValue=" + searchValue + "]";
 	}
 	
-	
-	
 }
-

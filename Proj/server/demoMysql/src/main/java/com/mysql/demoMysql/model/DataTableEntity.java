@@ -1,9 +1,7 @@
 package com.mysql.demoMysql.model;
-
 import java.util.ArrayList;
 
 public class DataTableEntity<T> {
-
 	private int totalRecords;
 	private int first;
 	private int rows;
@@ -33,9 +31,4 @@ public class DataTableEntity<T> {
 	public void setData(ArrayList<T> data) {
 		this.data = data;
 	}
-	
-	
-
-	
 }
-

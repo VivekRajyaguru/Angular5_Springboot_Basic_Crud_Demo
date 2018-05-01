@@ -1,6 +1,7 @@
 package com.mysql.demoMysql.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -31,18 +32,17 @@ public class UserServiceImpl implements UserService {
 	public DataTableEntity<User> getUserList(DataTableParam datatableParam) throws Exception {
 		Direction direction =  datatableParam.getSortOrder() == 1 ? Direction.ASC : Direction.DESC;
 		Pageable pageable = new PageRequest(datatableParam.getFirst(), datatableParam.getRows(), direction, datatableParam.getSortField());
-		Page<User> userList = userRepository.getUserByIsActiveAndFirstNameIgnoreCaseLikeOrLastNameIgnoreCaseLike("1", datatableParam.getSearchValue(), datatableParam.getSearchValue(), pageable);  
+		Page<User> userList = userRepository.getUserByIsActive("1",pageable);  
 		
 		DataTableEntity<User> dataTable = new DataTableEntity<>();
 		dataTable.setFirst(pageable.getPageNumber());
 		dataTable.setRows(pageable.getPageSize());
 		dataTable.setTotalRecords((int) userList.getTotalElements());
-		dataTable.setData((ArrayList<User>) userList.getContent());
+		dataTable.setData(convertListToArrayList(userList.getContent()));
 		
 		
 		return dataTable;
 	}
-
 	@Override
 	public User getUserById(String id) throws Exception {
 		return userRepository.findUserById(Long.parseLong(id));
@@ -53,6 +53,23 @@ public class UserServiceImpl implements UserService {
 		User user = userRepository.findUserById(Long.parseLong(id));
 		user.setIsActive("0");
 		userRepository.save(user);
+	}
+	
+	private ArrayList<User> convertListToArrayList(List<User> list) {
+		ArrayList<User> aryList = new ArrayList<>();
+		if(list !=null && !list.isEmpty()) {
+			for(User user: list) {
+				User object = new User();
+				object.setContactNo(user.getContactNo());
+				object.setEmail(user.getEmail());
+				object.setFirstName(user.getFirstName());
+				object.setId(user.getId());
+				object.setIsActive(user.getIsActive());
+				object.setLastName(user.getLastName());
+				aryList.add(object);
+			}
+		}
+		return aryList;
 	}
 
 }

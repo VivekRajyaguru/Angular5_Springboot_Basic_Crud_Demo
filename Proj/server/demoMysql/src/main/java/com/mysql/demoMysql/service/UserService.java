@@ -1,6 +1,5 @@
 package com.mysql.demoMysql.service;
 
-
 import com.mysql.demoMysql.model.DataTableEntity;
 import com.mysql.demoMysql.model.DataTableParam;
 import com.mysql.demoMysql.model.User;
