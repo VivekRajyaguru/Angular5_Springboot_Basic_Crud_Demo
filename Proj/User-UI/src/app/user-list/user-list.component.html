@@ -2,7 +2,8 @@
 <button (click)="addUser()">Add</button>
 </div>
 <div>
-<p-table #tt [columns]="columns" [value]="userList">
+<p-table #tt [columns]="columns" [value]="userList" [globalFilterFields]="['name']"
+(onLazyLoad)= "onLazyLoad($event)" [rows]="20" [paginator]="true" [first]="first">
 <ng-template pTemplate="caption">
     List of Users
 </ng-template>

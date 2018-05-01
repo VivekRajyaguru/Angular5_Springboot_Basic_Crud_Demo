@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../Service/User.service';
 import { User } from '../Model/User';
 import { Router } from '@angular/router';
+import { DataTableParam } from '../Model/DataTableParam';
 
 @Component({
   selector: 'app-user-list',
@@ -16,9 +17,33 @@ export class UserListComponent implements OnInit {
     {field: 'contactNo', header: 'Contact#'}
   ];
   userList: User[] = [];
-  constructor(private userService: UserService, private route: Router) { }
+  first: Number = 0;
+  datatableParam: DataTableParam;
+  totalRecords: Number = 0;
+  constructor(private userService: UserService, private route: Router) {
+    this.datatableParam = new DataTableParam();
+    this.datatableParam = {
+      'first': 0,
+      'rows': 20,
+      'sortField': 'id',
+      'sortOrder': 1,
+      'searchValue': ''
+    };
+  }
 
   ngOnInit() {
+    this.listUser();
+  }
+
+  onLazyLoad(event) {
+    console.log(event)
+    this.datatableParam = {
+      'first': event.first ? event.first : 1,
+      'rows': event.rows ? event.rows : 1 ,
+      'sortField': event.sortField ? event.sortField : 'id',
+      'sortOrder': event.sortOrder ? event.sortOrder : 1,
+      'searchValue': event.globalFilter ?  event.globalFilter : ''
+    };
     this.listUser();
   }
 
@@ -44,10 +69,12 @@ export class UserListComponent implements OnInit {
   }
 
   listUser() {
-    this.userService.listUser().subscribe(
+    this.userService.listUser(this.datatableParam).subscribe(
       data => {
         if (data.statusCode === 'A200') {
-          this.userList = data.data;
+          this.userList = data.valueObject.data;
+          this.first = data.valueObject.first;
+          this.totalRecords = data.valueObject.totalRecords;
         }
       },
       error => {
